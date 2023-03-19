@@ -20,7 +20,7 @@ public class JedisDataSource {
 		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
 		redisStandaloneConfiguration.setHostName(getRedisConfig("host").map(c -> c.toString()).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".host")));
 		redisStandaloneConfiguration.setPort(getRedisConfig("port").map(c -> (Integer) c).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".port")));
-		redisStandaloneConfiguration.setPassword(RedisPassword.of(getRedisConfig("password").map(c -> c.toString()).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".password"))));
+//		redisStandaloneConfiguration.setPassword(RedisPassword.of(getRedisConfig("password").map(c -> c.toString()).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".password"))));
 		
 		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
 		jedisClientConfiguration.connectTimeout(Duration.ofMillis(getRedisConfig("timeout").map(c -> (Integer) c).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".timeout"))));
@@ -29,6 +29,7 @@ public class JedisDataSource {
 
 		redisTemplate = new StringRedisTemplate();
 		redisTemplate.setConnectionFactory(jedisConnectionFactory);
+		redisTemplate.afterPropertiesSet();
 	}
 
 	public static StringRedisTemplate getRedisTemplate() {

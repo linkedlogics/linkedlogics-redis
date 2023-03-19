@@ -8,6 +8,7 @@ import dev.linkedlogics.LinkedLogics;
 import dev.linkedlogics.context.Context;
 import dev.linkedlogics.redis.repository.QueueRepository;
 import dev.linkedlogics.service.ConsumerService;
+import dev.linkedlogics.service.QueueService;
 import dev.linkedlogics.service.ServiceLocator;
 import dev.linkedlogics.service.task.ProcessorTask;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 public class RedisConsumerService implements ConsumerService , Runnable {
 	private Thread consumer;
 	private boolean isRunning;
-	private QueueRepository repository;
-	
-	public RedisConsumerService() {
-		this.repository = new QueueRepository();
-	}
 	
 	@Override
 	public void start() {
@@ -42,7 +38,8 @@ public class RedisConsumerService implements ConsumerService , Runnable {
 
 		while (isRunning) {
 			try {
-				Optional<String> message = repository.poll(LinkedLogics.getApplicationName());
+				QueueService queueService = ServiceLocator.getInstance().getQueueService();
+				Optional<String> message = queueService.poll(LinkedLogics.getApplicationName());
 
 				if (message.isPresent()) {
 					ObjectMapper mapper = ServiceLocator.getInstance().getMapperService().getMapper();
