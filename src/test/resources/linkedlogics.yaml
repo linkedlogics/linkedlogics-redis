@@ -5,3 +5,6 @@ linkedlogics:
     host: localhost
     port: 6370
     timeout: 10000
+  services:
+    processor:
+      bypass: true
