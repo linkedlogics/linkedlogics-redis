@@ -34,6 +34,7 @@ public class SimpleProcess1Tests {
 		LinkedLogics.configure(new RedisServiceConfigurer());
 		LinkedLogics.registerLogic(SimpleProcess1Tests.class);
 		LinkedLogics.registerProcess(SimpleProcess1Tests.class);
+		LinkedLogics.launch();
 	}
 	
 	@AfterAll
