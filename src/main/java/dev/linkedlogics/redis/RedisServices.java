@@ -10,7 +10,7 @@ import dev.linkedlogics.service.LinkedLogicsService;
 import dev.linkedlogics.service.ServiceProvider;
 import dev.linkedlogics.service.local.QueueSchedulerService;
 
-public class RedisServices implements ServiceProvider {
+public class RedisServices extends ServiceProvider {
 	@Override
 	public List<LinkedLogicsService> getMessagingServices() {
 		return List.of(new RedisQueueService(), new RedisTopicService());
