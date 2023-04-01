@@ -80,7 +80,7 @@ public class SimpleProcess1Tests {
 	}
 	
 	public static ProcessDefinition simple() {
-		return LinkedLogicsBuilder.createProcess("SIMPLE_SCENARIO_1")
+		return LinkedLogicsBuilder.createProcess("SIMPLE_SCENARIO_1", 1)
 				.add(logic("UPPER").application("test").input("s", expr("s")).build())
 				.add(logic("PREFIX").application("test").input("s", expr("s")).input("p", "XXX").build())
 				.add(logic("UPPER").application("test").input("s", expr("s")).build())

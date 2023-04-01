@@ -33,7 +33,7 @@ jacoco {
 }
 
 dependencies {
-	implementation 'dev.linkedlogics:linkedlogics:1.0.0-SNAPSHOT'
+	implementation 'dev.linkedlogics:linkedlogics:1.0.0'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 	implementation 'org.springframework.data:spring-data-redis:2.3.3.RELEASE'
 	implementation 'redis.clients:jedis:3.3.0'

@@ -15,23 +15,13 @@ public class ContextRepository extends JedisRepository {
 	}
 
 	public void update(Context context) throws Exception {
-//		redisTemplate.watch(getKey(context));
-		
 		String currentValue = redisTemplate.opsForValue().get(getKey(context));
 		if (currentValue != null && !currentValue.isEmpty()) {
 			if (getValue(currentValue).getVersion() <= context.getVersion()) {
-//				redisTemplate.multi();
 				redisTemplate.opsForValue().set(getKey(context), getValue(context));
-//				if (redisTemplate.exec() == null) {
-//					throw new OptimisticLockingFailureException("Failed to update key " + context.getId() + " due to concurrent modification.");
-//				}
 			}
 		} else {
-//			redisTemplate.multi();
 			redisTemplate.opsForValue().set(getKey(context), getValue(context));
-//			if (redisTemplate.exec() == null) {
-//				throw new RuntimeException("Failed to create key " + context.getId());
-//	        }
 		}
 	}
 

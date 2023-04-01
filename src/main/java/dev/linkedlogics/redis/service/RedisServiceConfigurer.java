@@ -7,6 +7,7 @@ import dev.linkedlogics.service.local.QueueSchedulerService;
 
 public class RedisServiceConfigurer extends ServiceConfigurer {
 	public RedisServiceConfigurer() {
+		configure(new RedisProcessService());
 		configure(new RedisContextService());
 		configure(new RedisQueueService());
 		configure(new RedisTopicService());

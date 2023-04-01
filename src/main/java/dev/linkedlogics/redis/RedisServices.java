@@ -3,6 +3,7 @@ package dev.linkedlogics.redis;
 import java.util.List;
 
 import dev.linkedlogics.redis.service.RedisContextService;
+import dev.linkedlogics.redis.service.RedisProcessService;
 import dev.linkedlogics.redis.service.RedisQueueService;
 import dev.linkedlogics.redis.service.RedisTopicService;
 import dev.linkedlogics.redis.service.RedisTriggerService;
@@ -23,6 +24,6 @@ public class RedisServices extends ServiceProvider {
 
 	@Override
 	public List<LinkedLogicsService> getStoringServices() {
-		return List.of(new RedisContextService(), new RedisTriggerService());
+		return List.of(new RedisContextService(), new RedisTriggerService(), new RedisProcessService());
 	}
 }

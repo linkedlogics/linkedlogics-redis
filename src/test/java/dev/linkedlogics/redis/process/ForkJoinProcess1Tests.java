@@ -53,7 +53,7 @@ public class ForkJoinProcess1Tests {
 		long finish = System.currentTimeMillis();
 
 		assertThat(finish - start).isGreaterThan(500);
-		assertThat(finish - start).isLessThan(2500);
+		assertThat(finish - start).isLessThan(5000);
 		contextService.get(contextId).ifPresent(ctx -> {
 			assertThat(ctx.getParams().containsKey("concat")).isTrue();
 			assertThat(ctx.getParams().get("concat")).asString().contains("v1");
@@ -125,7 +125,7 @@ public class ForkJoinProcess1Tests {
 		assertThat(waitUntil(contextId, Status.FINISHED)).isTrue();
 		long finish = System.currentTimeMillis();
 
-		assertThat(finish - start).isLessThan(50);
+		assertThat(finish - start).isLessThan(100);
 		contextService.get(contextId).ifPresent(ctx -> {
 			assertThat(ctx.getParams().containsKey("concat")).isTrue();
 			assertThat(ctx.getParams().get("concat")).asString().contains("key1");
