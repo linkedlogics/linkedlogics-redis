@@ -75,14 +75,14 @@ public class RedisProcessService extends LocalProcessService {
 				repository.set(process);
 				repository.setVersion(process.getId(), process.getVersion());
 			} catch (Exception e) {
-				throw new RuntimeException(String.format("unable to store process %s[%d] in db", process.getId(), process.getVersion()));
+				throw new RuntimeException(String.format("unable to store process %s[%d] in redis", process.getId(), process.getVersion()), e);
 			}
 		} else {
 			try {
 				repository.deleteVersion(process.getId(), process.getVersion());
 				repository.delete(process.getId(), process.getVersion());
 			} catch (Exception e) {
-				throw new RuntimeException(String.format("unable to delete process %s[%d] in db", process.getId(), process.getVersion()));
+				throw new RuntimeException(String.format("unable to delete process %s[%d] in redis", process.getId(), process.getVersion()), e);
 			}
 		}
 	}

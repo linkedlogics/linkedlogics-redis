@@ -26,7 +26,8 @@ public class JedisDataSource {
 		jedisClientConfiguration.connectTimeout(Duration.ofMillis(getRedisConfig("timeout").map(c -> (Integer) c).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".timeout"))));
 		jedisClientConfiguration.usePooling();
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration, jedisClientConfiguration.build());
-
+		jedisConnectionFactory.afterPropertiesSet();
+		
 		redisTemplate = new StringRedisTemplate();
 		redisTemplate.setConnectionFactory(jedisConnectionFactory);
 		redisTemplate.afterPropertiesSet();

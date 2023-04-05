@@ -11,12 +11,10 @@ public class ProcessRepository extends JedisRepository {
 	private static final String PROCESS = "process:";
 
 	public void set(ProcessDefinition process) throws Exception {
-		System.out.println("SET " + getKey(process));
 		redisTemplate.opsForValue().set(getKey(process), getValue(process));
 	}
 
 	public Optional<ProcessDefinition> get(String id, int version) throws Exception {
-		System.out.println("GET " + getKey(id, version));
 		String currentValue = redisTemplate.opsForValue().get(getKey(id, version));
 		if (currentValue != null && !currentValue.isEmpty()) {
 			return Optional.of(getValue(currentValue));
@@ -32,7 +30,6 @@ public class ProcessRepository extends JedisRepository {
 	}
 	
 	public void setVersion(String id, int version) {
-		System.out.println("SET VERSION " + getMaxVersionKey(id));
 		redisTemplate.opsForSet().add(getMaxVersionKey(id), String.valueOf(version));
 	}
 	
