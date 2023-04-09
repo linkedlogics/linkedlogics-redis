@@ -9,7 +9,7 @@ import dev.linkedlogics.redis.service.RedisTopicService;
 import dev.linkedlogics.redis.service.RedisTriggerService;
 import dev.linkedlogics.service.LinkedLogicsService;
 import dev.linkedlogics.service.ServiceProvider;
-import dev.linkedlogics.service.local.QueueSchedulerService;
+import dev.linkedlogics.service.common.QueueSchedulerService;
 
 public class RedisServices extends ServiceProvider {
 	@Override
