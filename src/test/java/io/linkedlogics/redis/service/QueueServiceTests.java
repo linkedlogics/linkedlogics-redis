@@ -1,4 +1,4 @@
-package dev.linkedlogics.redis.service;
+package io.linkedlogics.redis.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,10 +8,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dev.linkedlogics.LinkedLogics;
-import dev.linkedlogics.redis.service.RedisServiceConfigurer;
-import dev.linkedlogics.service.QueueService;
-import dev.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.LinkedLogics;
+import io.linkedlogics.service.QueueService;
+import io.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.redis.service.RedisServiceConfigurer;
 import redis.embedded.RedisServer;
 
 public class QueueServiceTests {

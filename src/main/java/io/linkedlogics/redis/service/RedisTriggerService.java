@@ -1,9 +1,9 @@
-package dev.linkedlogics.redis.service;
+package io.linkedlogics.redis.service;
 
 import java.util.List;
 
-import dev.linkedlogics.redis.repository.TriggerRepository;
-import dev.linkedlogics.service.TriggerService;
+import io.linkedlogics.service.TriggerService;
+import io.linkedlogics.redis.repository.TriggerRepository;
 
 public class RedisTriggerService implements TriggerService {
 	private TriggerRepository repository;

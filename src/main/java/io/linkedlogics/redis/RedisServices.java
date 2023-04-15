@@ -1,15 +1,15 @@
-package dev.linkedlogics.redis;
+package io.linkedlogics.redis;
 
 import java.util.List;
 
-import dev.linkedlogics.redis.service.RedisContextService;
-import dev.linkedlogics.redis.service.RedisProcessService;
-import dev.linkedlogics.redis.service.RedisQueueService;
-import dev.linkedlogics.redis.service.RedisTopicService;
-import dev.linkedlogics.redis.service.RedisTriggerService;
-import dev.linkedlogics.service.LinkedLogicsService;
-import dev.linkedlogics.service.ServiceProvider;
-import dev.linkedlogics.service.common.QueueSchedulerService;
+import io.linkedlogics.service.LinkedLogicsService;
+import io.linkedlogics.service.ServiceProvider;
+import io.linkedlogics.service.common.QueueSchedulerService;
+import io.linkedlogics.redis.service.RedisContextService;
+import io.linkedlogics.redis.service.RedisProcessService;
+import io.linkedlogics.redis.service.RedisQueueService;
+import io.linkedlogics.redis.service.RedisTopicService;
+import io.linkedlogics.redis.service.RedisTriggerService;
 
 public class RedisServices extends ServiceProvider {
 	@Override

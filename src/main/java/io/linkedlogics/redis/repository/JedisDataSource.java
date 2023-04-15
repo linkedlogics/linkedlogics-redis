@@ -1,4 +1,4 @@
-package dev.linkedlogics.redis.repository;
+package io.linkedlogics.redis.repository;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import dev.linkedlogics.config.LinkedLogicsConfiguration;
+import io.linkedlogics.config.LinkedLogicsConfiguration;
 
 public class JedisDataSource {
 	private static final String REDIS = "redis";

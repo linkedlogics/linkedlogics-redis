@@ -1,11 +1,11 @@
-package dev.linkedlogics.redis.service;
+package io.linkedlogics.redis.service;
 
 import java.util.Optional;
 
-import dev.linkedlogics.context.Context;
-import dev.linkedlogics.context.Status;
-import dev.linkedlogics.redis.repository.ContextRepository;
-import dev.linkedlogics.service.ContextService;
+import io.linkedlogics.context.Context;
+import io.linkedlogics.context.Status;
+import io.linkedlogics.service.ContextService;
+import io.linkedlogics.redis.repository.ContextRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

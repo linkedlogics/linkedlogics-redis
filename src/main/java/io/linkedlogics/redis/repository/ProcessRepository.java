@@ -1,11 +1,11 @@
-package dev.linkedlogics.redis.repository;
+package io.linkedlogics.redis.repository;
 
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import dev.linkedlogics.model.ProcessDefinition;
-import dev.linkedlogics.model.ProcessDefinitionReader;
-import dev.linkedlogics.model.ProcessDefinitionWriter;
+import io.linkedlogics.model.ProcessDefinition;
+import io.linkedlogics.model.ProcessDefinitionReader;
+import io.linkedlogics.model.ProcessDefinitionWriter;
 
 public class ProcessRepository extends JedisRepository {
 	private static final String PROCESS = "process:";

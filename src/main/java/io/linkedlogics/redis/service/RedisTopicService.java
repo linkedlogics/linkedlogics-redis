@@ -1,8 +1,8 @@
-package dev.linkedlogics.redis.service;
+package io.linkedlogics.redis.service;
 
 import java.util.Optional;
 
-import dev.linkedlogics.service.TopicService;
+import io.linkedlogics.service.TopicService;
 
 public class RedisTopicService implements TopicService {
 

@@ -1,10 +1,10 @@
-package dev.linkedlogics.redis.process;
+package io.linkedlogics.redis.process;
 
-import static dev.linkedlogics.LinkedLogicsBuilder.createProcess;
-import static dev.linkedlogics.LinkedLogicsBuilder.expr;
-import static dev.linkedlogics.LinkedLogicsBuilder.group;
-import static dev.linkedlogics.LinkedLogicsBuilder.logic;
-import static dev.linkedlogics.redis.process.ProcessTestHelper.waitUntil;
+import static io.linkedlogics.LinkedLogicsBuilder.createProcess;
+import static io.linkedlogics.LinkedLogicsBuilder.expr;
+import static io.linkedlogics.LinkedLogicsBuilder.group;
+import static io.linkedlogics.LinkedLogicsBuilder.logic;
+import static io.linkedlogics.redis.process.ProcessTestHelper.waitUntil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
@@ -14,14 +14,14 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import dev.linkedlogics.LinkedLogics;
-import dev.linkedlogics.annotation.Input;
-import dev.linkedlogics.annotation.Logic;
-import dev.linkedlogics.context.Status;
-import dev.linkedlogics.model.ProcessDefinition;
-import dev.linkedlogics.redis.service.RedisServiceConfigurer;
-import dev.linkedlogics.service.ContextService;
-import dev.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.LinkedLogics;
+import io.linkedlogics.annotation.Input;
+import io.linkedlogics.annotation.Logic;
+import io.linkedlogics.context.Status;
+import io.linkedlogics.model.ProcessDefinition;
+import io.linkedlogics.service.ContextService;
+import io.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.redis.service.RedisServiceConfigurer;
 import redis.embedded.RedisServer;
 
 public class ForkJoinProcess1Tests {

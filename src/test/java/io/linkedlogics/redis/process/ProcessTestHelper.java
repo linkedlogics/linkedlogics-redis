@@ -1,10 +1,10 @@
-package dev.linkedlogics.redis.process;
+package io.linkedlogics.redis.process;
 
 import java.util.Optional;
 
-import dev.linkedlogics.context.Context;
-import dev.linkedlogics.context.Status;
-import dev.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.context.Context;
+import io.linkedlogics.context.Status;
+import io.linkedlogics.service.ServiceLocator;
 
 public class ProcessTestHelper {
 	public static final long MAX_WAIT_TIME = 5000;

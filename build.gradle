@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'dev.linkedlogics'
+group = 'io.linkedlogics'
 version = '1.0.0'
 sourceCompatibility = '11'
 
@@ -33,7 +33,7 @@ jacoco {
 }
 
 dependencies {
-	implementation 'dev.linkedlogics:linkedlogics:1.0.0'
+	implementation 'io.linkedlogics:linkedlogics:1.0.0'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 	implementation 'org.springframework.data:spring-data-redis:2.3.3.RELEASE'
 	implementation 'redis.clients:jedis:3.3.0'
@@ -51,7 +51,7 @@ dependencies {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'dev.linkedlogics'
+            groupId = 'io.linkedlogics'
             artifactId = 'linkedlogics-redis'
             version = "$version"
 

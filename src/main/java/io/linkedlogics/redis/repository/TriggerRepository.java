@@ -1,12 +1,12 @@
-package dev.linkedlogics.redis.repository;
+package io.linkedlogics.redis.repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import dev.linkedlogics.service.ServiceLocator;
-import dev.linkedlogics.service.TriggerService.Trigger;
+import io.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.service.TriggerService.Trigger;
 
 public class TriggerRepository  extends JedisRepository {
 	private static final String TRIGGER = "trigger:";

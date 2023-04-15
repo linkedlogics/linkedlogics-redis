@@ -1,11 +1,11 @@
-package dev.linkedlogics.redis.repository;
+package io.linkedlogics.redis.repository;
 
 import java.util.Optional;
 
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import dev.linkedlogics.context.Context;
-import dev.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.context.Context;
+import io.linkedlogics.service.ServiceLocator;
 
 public class ContextRepository extends JedisRepository {
 	private static final String CONTEXT = "context:";

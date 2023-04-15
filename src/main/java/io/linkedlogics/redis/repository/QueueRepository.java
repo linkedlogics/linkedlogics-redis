@@ -1,4 +1,4 @@
-package dev.linkedlogics.redis.repository;
+package io.linkedlogics.redis.repository;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package dev.linkedlogics.redis.service;
+package io.linkedlogics.redis.service;
 
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -6,9 +6,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import dev.linkedlogics.model.ProcessDefinition;
-import dev.linkedlogics.redis.repository.ProcessRepository;
-import dev.linkedlogics.service.local.LocalProcessService;
+import io.linkedlogics.model.ProcessDefinition;
+import io.linkedlogics.service.local.LocalProcessService;
+import io.linkedlogics.redis.repository.ProcessRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

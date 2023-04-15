@@ -1,13 +1,13 @@
-package dev.linkedlogics.redis.process;
+package io.linkedlogics.redis.process;
 
 import java.time.OffsetDateTime;
 
-import dev.linkedlogics.LinkedLogics;
-import dev.linkedlogics.redis.service.RedisServiceConfigurer;
-import dev.linkedlogics.service.SchedulerService.Schedule;
-import dev.linkedlogics.service.SchedulerService.ScheduleType;
+import io.linkedlogics.LinkedLogics;
+import io.linkedlogics.service.SchedulerService.Schedule;
+import io.linkedlogics.service.SchedulerService.ScheduleType;
+import io.linkedlogics.redis.service.RedisServiceConfigurer;
 import redis.embedded.RedisServer;
-import dev.linkedlogics.service.ServiceLocator;
+import io.linkedlogics.service.ServiceLocator;
 
 public class Main {
 	public static void main(String[] args) {

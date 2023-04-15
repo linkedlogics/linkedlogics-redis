@@ -1,9 +1,9 @@
-package dev.linkedlogics.redis.service;
+package io.linkedlogics.redis.service;
 
 import java.util.Optional;
 
-import dev.linkedlogics.redis.repository.QueueRepository;
-import dev.linkedlogics.service.QueueService;
+import io.linkedlogics.service.QueueService;
+import io.linkedlogics.redis.repository.QueueRepository;
 
 public class RedisQueueService implements QueueService {
 	private QueueRepository repository;
