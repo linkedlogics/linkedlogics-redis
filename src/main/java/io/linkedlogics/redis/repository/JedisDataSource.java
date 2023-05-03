@@ -10,18 +10,24 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import io.linkedlogics.config.LinkedLogicsConfiguration;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JedisDataSource {
 	private static final String REDIS = "redis";
 	
 	private static StringRedisTemplate redisTemplate;
 
 	static {
-		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-		redisStandaloneConfiguration.setHostName(getRedisConfig("host").map(c -> c.toString()).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".host")));
-		redisStandaloneConfiguration.setPort(getRedisConfig("port").map(c -> (Integer) c).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".port")));
-//		redisStandaloneConfiguration.setPassword(RedisPassword.of(getRedisConfig("password").map(c -> c.toString()).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".password"))));
+		String redisHost = getRedisConfig("host").map(c -> c.toString()).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".host"));
+		int redisPort = getRedisConfig("port").map(c -> (Integer) c).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".port"));
+		log.info("connecting to redis@{}:{}", redisHost, redisPort);
 		
+		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+		redisStandaloneConfiguration.setHostName(redisHost);
+		redisStandaloneConfiguration.setPort(redisPort);
+//		redisStandaloneConfiguration.setPassword(RedisPassword.of(getRedisConfig("password").map(c -> c.toString()).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".password"))));
+
 		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
 		jedisClientConfiguration.connectTimeout(Duration.ofMillis(getRedisConfig("timeout").map(c -> (Integer) c).orElseThrow(() -> new IllegalArgumentException("missing configuration " + REDIS + ".timeout"))));
 		jedisClientConfiguration.usePooling();

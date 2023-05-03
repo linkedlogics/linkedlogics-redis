@@ -4,6 +4,8 @@ import java.util.List;
 
 import io.linkedlogics.service.LinkedLogicsService;
 import io.linkedlogics.service.ServiceProvider;
+import io.linkedlogics.service.common.QueueConsumerService;
+import io.linkedlogics.service.common.QueuePublisherService;
 import io.linkedlogics.service.common.QueueSchedulerService;
 import io.linkedlogics.redis.service.RedisContextService;
 import io.linkedlogics.redis.service.RedisProcessService;
@@ -14,7 +16,7 @@ import io.linkedlogics.redis.service.RedisTriggerService;
 public class RedisServices extends ServiceProvider {
 	@Override
 	public List<LinkedLogicsService> getMessagingServices() {
-		return List.of(new RedisQueueService(), new RedisTopicService());
+		return List.of(new RedisQueueService(), new RedisTopicService(), new QueuePublisherService(), new QueueConsumerService());
 	}
 
 	@Override
