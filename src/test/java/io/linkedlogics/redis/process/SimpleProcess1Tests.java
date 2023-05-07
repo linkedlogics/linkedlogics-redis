@@ -23,6 +23,7 @@ import io.linkedlogics.context.ContextError;
 import io.linkedlogics.context.Status;
 import io.linkedlogics.model.ProcessDefinition;
 import io.linkedlogics.redis.service.RedisServiceConfigurer;
+import io.linkedlogics.service.ServiceLocator;
 import redis.embedded.RedisServer;
 
 public class SimpleProcess1Tests {
@@ -46,6 +47,7 @@ public class SimpleProcess1Tests {
 
 	@Test
 	public void testScenario1() {
+		ServiceLocator.getInstance().print();
 		AtomicBoolean result = new AtomicBoolean();
 		String contextId = LinkedLogics.start(ContextBuilder.process("SIMPLE_SCENARIO_1").params("s", "hello").build(),
 				new LinkedLogicsCallback() {

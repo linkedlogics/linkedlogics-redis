@@ -1,34 +1,47 @@
 package io.linkedlogics.redis.service;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import io.linkedlogics.model.ProcessDefinition;
+import io.linkedlogics.model.ProcessDefinitionReader;
+import io.linkedlogics.model.ProcessDefinitionWriter;
+import io.linkedlogics.model.process.helper.LogicDependencies;
+import io.linkedlogics.service.ConfigurableService;
+import io.linkedlogics.service.ProcessService;
+import io.linkedlogics.service.ServiceLocator;
 import io.linkedlogics.service.local.LocalProcessService;
 import io.linkedlogics.redis.repository.ProcessRepository;
+import io.linkedlogics.redis.service.config.RedisProcessServiceConfig;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RedisProcessService extends LocalProcessService {
+public class RedisProcessService extends ConfigurableService<RedisProcessServiceConfig> implements ProcessService {
+	protected Map<String, ProcessDefinition> definitions = new ConcurrentHashMap<>();
 	private ScheduledExecutorService service;
 	private ProcessRepository repository;
 
 	public RedisProcessService() {
-		this.repository = new ProcessRepository();
+		super(RedisProcessServiceConfig.class);
+		this.repository = new ProcessRepository(new RedisConnectionService().getRedisTemplate());
 	}
 
 	@Override
 	public void start() {
-		service = Executors.newSingleThreadScheduledExecutor();
-		service.scheduleAtFixedRate(new Runnable() {
-			@Override
-			public void run() {
-				refreshProcesses();
-			}
-		}, 5, 5, TimeUnit.MINUTES);
+		if (getConfig().getRefreshEnabled(true)) {
+			service = Executors.newSingleThreadScheduledExecutor();
+			service.scheduleAtFixedRate(new Runnable() {
+				@Override
+				public void run() {
+					refreshProcesses();
+				}
+			}, getConfig().getRefreshInterval().get(), getConfig().getRefreshInterval().get(), TimeUnit.SECONDS);
+		}
 	}
 
 	@Override
@@ -36,6 +49,11 @@ public class RedisProcessService extends LocalProcessService {
 		if (service != null) {
 			service.shutdownNow();
 		}
+	}
+	
+	@Override
+	public Optional<ProcessDefinition> getProcess(String processId) {
+		return getProcess(processId, LATEST_VERSION);
 	}
 
 	@Override
@@ -53,7 +71,7 @@ public class RedisProcessService extends LocalProcessService {
 			if (process.isEmpty()) {
 				Optional<ProcessDefinition> newProcess = repository.get(processId, version);
 				if (newProcess.isPresent()) {
-					super.addProcess(newProcess.get());
+					addProcessToMap(newProcess.get());
 					return Optional.of(newProcess.get());
 				}
 			} else {
@@ -68,9 +86,9 @@ public class RedisProcessService extends LocalProcessService {
 	}
 
 	@Override
-	protected void addProcess(ProcessDefinition process) {
+	public void addProcess(ProcessDefinition process) {
 		if (!process.isArchived()) {
-			super.addProcess(process);
+			addProcessToMap(process);
 			try {
 				repository.set(process);
 				repository.setVersion(process.getId(), process.getVersion());
@@ -86,13 +104,40 @@ public class RedisProcessService extends LocalProcessService {
 			}
 		}
 	}
+	
+	public void addProcessToMap(ProcessDefinition process) {
+		if (process.isArchived()) {
+			log.info(String.format("process %s:%d is archived", process.getId(), process.getVersion()));
+			return;
+		}
+		
+		ProcessDefinition validatedDefinition = new ProcessDefinitionReader(new ProcessDefinitionWriter(process).write()).read();
+		
+		if (definitions.containsKey(getProcessKey(validatedDefinition))) {
+			log.warn("process {}:{} was overwritten", process.getId(), process.getVersion());
+		}
+		
+		definitions.put(getProcessKey(validatedDefinition), validatedDefinition);
+		definitions.values()
+			.stream()
+			.sorted((p1, p2) -> p1.compareTo(p2))
+			.forEach(LogicDependencies::setDependencies);
+	}
+	
+	protected String getProcessKey(ProcessDefinition process) {
+		return String.format("%s:%d", process.getId(), process.getVersion());
+	}
+	
+	protected String getProcessKey(String processId, int version) {
+		return String.format("%s:%d", processId, version);
+	}
 
 	public void refreshProcesses() {
 		try {
 			for (ProcessDefinition process : definitions.values()) {
 				try {
 					repository.get(process.getId(), process.getVersion()).ifPresent(p -> {
-						RedisProcessService.super.addProcess(p);
+						addProcessToMap(p);
 					});
 				} catch (Exception e) {
 					log.error(String.format("unable to read process %s:%d", process.getId(), process.getVersion()), e);

@@ -3,6 +3,8 @@ package io.linkedlogics.redis.repository;
 import java.util.Optional;
 import java.util.OptionalInt;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
+
 import io.linkedlogics.model.ProcessDefinition;
 import io.linkedlogics.model.ProcessDefinitionReader;
 import io.linkedlogics.model.ProcessDefinitionWriter;
@@ -10,6 +12,10 @@ import io.linkedlogics.model.ProcessDefinitionWriter;
 public class ProcessRepository extends JedisRepository {
 	private static final String PROCESS = "process:";
 
+	public ProcessRepository(StringRedisTemplate redisTemplate) {
+		super(redisTemplate);
+	}
+	
 	public void set(ProcessDefinition process) throws Exception {
 		redisTemplate.opsForValue().set(getKey(process), getValue(process));
 	}

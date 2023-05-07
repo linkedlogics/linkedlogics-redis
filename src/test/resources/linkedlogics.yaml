@@ -8,3 +8,7 @@ linkedlogics:
   services:
     processor:
       bypass: true
+      timeout: 30
+    process:
+      refresh:
+        enabled: false

@@ -3,6 +3,8 @@ package io.linkedlogics.redis.repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.linkedlogics.service.ServiceLocator;
@@ -11,6 +13,10 @@ import io.linkedlogics.service.TriggerService.Trigger;
 public class TriggerRepository  extends JedisRepository {
 	private static final String TRIGGER = "trigger:";
 
+	public TriggerRepository(StringRedisTemplate redisTemplate) {
+		super(redisTemplate);
+	}
+	
 	public void create(String contextId, Trigger trigger) {
 		redisTemplate.opsForList().leftPush(getKey(contextId), getValue(trigger));
 	}

@@ -2,13 +2,17 @@ package io.linkedlogics.redis.repository;
 
 import java.util.Optional;
 
-import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import io.linkedlogics.context.Context;
 import io.linkedlogics.service.ServiceLocator;
 
 public class ContextRepository extends JedisRepository {
 	private static final String CONTEXT = "context:";
+	
+	public ContextRepository(StringRedisTemplate redisTemplate) {
+		super(redisTemplate);
+	}
 	
 	public void create(Context context) throws Exception {
 		redisTemplate.opsForValue().set(getKey(context), getValue(context));

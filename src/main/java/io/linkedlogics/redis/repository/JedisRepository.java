@@ -5,7 +5,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 public abstract class JedisRepository {
 	protected StringRedisTemplate redisTemplate;
 	
-	public JedisRepository() {
-		this.redisTemplate = JedisDataSource.getRedisTemplate();
+	public JedisRepository(StringRedisTemplate redisTemplate) {
+		this.redisTemplate = redisTemplate;
 	}
 }

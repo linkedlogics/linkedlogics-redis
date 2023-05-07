@@ -4,8 +4,9 @@ import java.util.Optional;
 
 import io.linkedlogics.context.Context;
 import io.linkedlogics.context.Status;
-import io.linkedlogics.service.ContextService;
 import io.linkedlogics.redis.repository.ContextRepository;
+import io.linkedlogics.service.ContextService;
+import io.linkedlogics.service.ServiceLocator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -13,9 +14,9 @@ public class RedisContextService implements ContextService {
 	private ContextRepository repository;
 	
 	public RedisContextService() {
-		this.repository = new ContextRepository();
+		this.repository = new ContextRepository(new RedisConnectionService().getRedisTemplate());
 	}
-	
+
 	@Override
 	public Optional<Context> get(String id) {
 		try {
