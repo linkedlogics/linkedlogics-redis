@@ -4,33 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import io.linkedlogics.LinkedLogics;
+import io.linkedlogics.redis.extension.RedisExtension;
 import io.linkedlogics.service.QueueService;
 import io.linkedlogics.service.ServiceLocator;
-import io.linkedlogics.redis.service.RedisServiceConfigurer;
-import redis.embedded.RedisServer;
+import io.linkedlogics.test.LinkedLogicsExtension;
+import io.linkedlogics.test.LinkedLogicsRegister;
 
+@ExtendWith({LinkedLogicsExtension.class, RedisExtension.class})
+@LinkedLogicsRegister(serviceConfigurerClasses = RedisServiceConfigurer.class)
 public class QueueServiceTests {
 	private static final String QUEUE = "q1";
-	
-	private static RedisServer redisServer;
-	
-	@BeforeAll
-	public static void setUp() {
-		redisServer = new RedisServer(6370);
-		redisServer.start();
-		LinkedLogics.configure(new RedisServiceConfigurer());
-	}
-	
-	@AfterAll
-	public static void cleanUp() {
-		if (redisServer != null)
-			redisServer.stop();
-	}
 	
 	@Test
 	public void shouldOfferAndConsume() {
