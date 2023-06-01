@@ -12,35 +12,33 @@ import io.linkedlogics.model.ProcessDefinition;
 import io.linkedlogics.model.ProcessDefinitionReader;
 import io.linkedlogics.model.ProcessDefinitionWriter;
 import io.linkedlogics.model.process.helper.LogicDependencies;
-import io.linkedlogics.service.ConfigurableService;
-import io.linkedlogics.service.ProcessService;
-import io.linkedlogics.service.ServiceLocator;
-import io.linkedlogics.service.local.LocalProcessService;
 import io.linkedlogics.redis.repository.ProcessRepository;
 import io.linkedlogics.redis.service.config.RedisProcessServiceConfig;
+import io.linkedlogics.service.ProcessService;
+import io.linkedlogics.service.config.ServiceConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RedisProcessService extends ConfigurableService<RedisProcessServiceConfig> implements ProcessService {
+public class RedisProcessService implements ProcessService {
 	protected Map<String, ProcessDefinition> definitions = new ConcurrentHashMap<>();
 	private ScheduledExecutorService service;
 	private ProcessRepository repository;
+	private RedisProcessServiceConfig config = new ServiceConfiguration().getConfig(RedisProcessServiceConfig.class);
 
 	public RedisProcessService() {
-		super(RedisProcessServiceConfig.class);
 		this.repository = new ProcessRepository(new RedisConnectionService().getRedisTemplate());
 	}
 
 	@Override
 	public void start() {
-		if (getConfig().getRefreshEnabled(true)) {
+		if (config.getRefreshEnabled(true)) {
 			service = Executors.newSingleThreadScheduledExecutor();
 			service.scheduleAtFixedRate(new Runnable() {
 				@Override
 				public void run() {
 					refreshProcesses();
 				}
-			}, getConfig().getRefreshInterval().get(), getConfig().getRefreshInterval().get(), TimeUnit.SECONDS);
+			}, config.getRefreshInterval().get(), config.getRefreshInterval().get(), TimeUnit.SECONDS);
 		}
 	}
 
