@@ -61,16 +61,16 @@ public class RedisProcess1Tests {
 		return createProcess("SIMPLE_SCENARIO_1", 0)
 				.add(logic("CREATE")
 						.input("key", "key1").input("value", "v1").input("delay", 1000L).fork("F1")
-						.build())
+						)
 				.add(logic("CREATE")
 						.input("key", "key2").input("value", "v2").input("delay", 1500L).fork("F2")
-						.build())
+						)
 				.add(logic("CREATE")
 						.input("key", "key3").input("value", "v3").input("delay", 2000L).fork("F3")
-						.build())
+						)
 				.add(logic("CONCAT")
 						.input("val1", expr("key1")).input("val2", expr("key2")).input("val3", expr("key3")).join("F1", "F2", "F3")
-						.build())
+						)
 				.build();
 	}
 	
@@ -99,9 +99,9 @@ public class RedisProcess1Tests {
 
 	public static ProcessDefinition scenario2() {
 		return createProcess("SIMPLE_SCENARIO_2", 0)
-				.add(logic("INSERT").input("list", var("list")).input("val", "v1").build())
-				.add(logic("INSERT").input("list", var("list")).input("val", "v2").delayed(seconds(3)).build())
-				.add(logic("INSERT").input("list", var("list")).input("val", "v3").build())
+				.add(logic("INSERT").input("list", var("list")).input("val", "v1"))
+				.add(logic("INSERT").input("list", var("list")).input("val", "v2").delayed(seconds(3)))
+				.add(logic("INSERT").input("list", var("list")).input("val", "v3"))
 				.build();
 	}
 	
