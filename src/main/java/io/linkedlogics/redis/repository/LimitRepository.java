@@ -9,7 +9,6 @@ import java.util.Optional;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
@@ -32,10 +31,11 @@ public class LimitRepository extends JedisRepository {
 	public boolean update(String key, OffsetDateTime expiresAt, Long limit, Long increment) {
 		String currentValue = redisTemplate.opsForValue().get(getKey(key));
 		if (currentValue != null && !currentValue.isEmpty()) {
-			redisTemplate.opsForValue().set(getKey(key), increment);
+			redisTemplate.opsForValue().set(getKey(key), ""+increment);
 		} else {
-			redisTemplate.opsForValue().set(getKey(key), increment);
+			redisTemplate.opsForValue().set(getKey(key), ""+increment);
 		}
+		return true;
 	}
 	
 	public Optional<Long> get(String key) {
