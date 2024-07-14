@@ -1,6 +1,7 @@
 package io.linkedlogics.redis.repository;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -15,17 +16,17 @@ public class ContextRepository extends JedisRepository {
 	}
 	
 	public void create(Context context) throws Exception {
-		redisTemplate.opsForValue().set(getKey(context), getValue(context));
+		redisTemplate.opsForValue().set(getKey(context), getValue(context), 120, TimeUnit.SECONDS);
 	}
 
 	public void update(Context context) throws Exception {
 		String currentValue = redisTemplate.opsForValue().get(getKey(context));
 		if (currentValue != null && !currentValue.isEmpty()) {
 			if (getValue(currentValue).getVersion() <= context.getVersion()) {
-				redisTemplate.opsForValue().set(getKey(context), getValue(context));
+				redisTemplate.opsForValue().set(getKey(context), getValue(context), 120, TimeUnit.SECONDS);
 			}
 		} else {
-			redisTemplate.opsForValue().set(getKey(context), getValue(context));
+			redisTemplate.opsForValue().set(getKey(context), getValue(context), 120, TimeUnit.SECONDS);
 		}
 	}
 

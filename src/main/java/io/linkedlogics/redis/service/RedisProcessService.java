@@ -59,7 +59,7 @@ public class RedisProcessService implements ProcessService {
 		try {
 			int version;
 			if (processVersion == LATEST_VERSION) {
-				version = repository.getMaxVersion(processId).map(Function.identity()).orElseThrow(() -> new RuntimeException("ASDAD"));
+				version = repository.getMaxVersion(processId).map(Function.identity()).orElseThrow(() -> new RuntimeException("Get max version failed"));
 			} else {
 				version = processVersion;
 			}
